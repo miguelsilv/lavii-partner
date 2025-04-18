@@ -167,4 +167,5 @@ export const Expanded = styled(View, {
   flexGrow: 1,
   flexShrink: 1,
   flexBasis: 0,
+  width: "100%"
 });

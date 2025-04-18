@@ -1,18 +1,15 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Image } from "expo-image";
+import { NavigationContainer } from "@react-navigation/native";
+
 import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_700Bold,
   useFonts,
 } from "@expo-google-fonts/poppins";
-import { SafeAreaView } from "react-native-safe-area-context";
-import styled from "./utils/styled";
-import { scaleSize } from "./utils/responsive";
-import { primaryColor } from "./styles/colors";
-import Button from "./components/Button";
-import MainScreen from "./screens";
+
 import { MainScreen2 } from "./screens/MainScreen";
+import RootNavigator from "./navigations/RootNavigator";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -25,5 +22,9 @@ export default function App() {
     return <Text>Carregando fontes...</Text>;
   }
 
-  return <MainScreen2 />;
+  return (
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
+  );
 }

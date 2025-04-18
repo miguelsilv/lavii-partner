@@ -89,10 +89,16 @@ const RegularSemiBoldText = styled(HintText, {
   fontWeight: weightMap.semiBold,
 });
 
+const RegularMediumText = styled(HintText, {
+  fontSize: 14,
+  fontWeight: weightMap.medium,
+});
+
 export const RegularText = styled(HintText, {
   fontSize: 14,
 }).withSubComponents({
   SemiBold: RegularSemiBoldText,
+  Medium: RegularMediumText,
 });
 
 // Subtitles

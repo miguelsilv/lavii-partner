@@ -3,6 +3,7 @@ import { RefAttributes } from "react";
 import { View, ViewProps, Text, TextProps } from "react-native";
 import { primaryColor } from "@/styles/colors";
 import styled from "@/utils/styled";
+import { scaleSize } from "@/utils/responsive";
 
 interface ContainerButtonProps {
   pressed: boolean;
@@ -22,8 +23,8 @@ export const ContainerButton = styled<ContainerButtonProps, ViewProps>(
     ...(props.outline && { borderColor: primaryColor }),
     ...(props.outline && { borderWidth: 2 }),
     width: "100%",
-    borderRadius: 10,
-    height: 49,
+    borderRadius: scaleSize(10),
+    height: scaleSize(49),
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
