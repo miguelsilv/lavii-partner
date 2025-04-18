@@ -5,6 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import {
   SafeAreaView,
   SafeAreaViewProps,
+  Edge,
 } from "react-native-safe-area-context";
 
 export const Container = styled<
@@ -12,17 +13,24 @@ export const Container = styled<
   SafeAreaViewProps
 >(SafeAreaView, ({ backgroundColor }) => ({
   flex: 1,
-  padding: 24,
+  // padding: 24,
+  paddingHorizontal:24,
   backgroundColor: backgroundColor ?? "#F1F1F1",
 }));
 
 export const ContainerScrollable = (
-  props: PropsWithChildren<SafeAreaViewProps & { scroll?: ScrollViewProps }>
+  props: PropsWithChildren<
+    SafeAreaViewProps & { scroll?: ScrollViewProps; backgroundColor?: string }
+  >
 ) => {
   const { scroll, ...rest } = props;
   return (
     <Container style={{ padding: 0 }} {...(rest as any)}>
-      <ScrollView style={{ padding: 24 }} showsVerticalScrollIndicator={false} {...scroll}>
+      <ScrollView
+        style={{ padding: 24,paddingHorizontal:0 }}
+        showsVerticalScrollIndicator={false}
+        {...scroll}
+      >
         {props.children}
       </ScrollView>
     </Container>
@@ -111,14 +119,14 @@ export const Column = styled<
   flexDirection: "column",
   justifyContent: props.mainAlign,
   alignItems: props.crossAlign,
-  width:"100%"
+  flex: 1,
 }));
 
 export const Center = styled(View, {
   justifyContent: "center",
   alignItems: "center",
   verticalAlign: "middle",
-  flexGrow:1,
+  flexGrow: 1,
 });
 
 type Alignment =
@@ -128,7 +136,9 @@ type Alignment =
   | "topCenter"
   | "topLeft"
   | "topRight"
-  | "center";
+  | "center"
+  | "centerLeft"
+  | "centerRight";
 
 export const Align = styled<{ alignment?: Alignment }, ViewProps>(
   View,
@@ -167,5 +177,4 @@ export const Expanded = styled(View, {
   flexGrow: 1,
   flexShrink: 1,
   flexBasis: 0,
-  width: "100%"
 });

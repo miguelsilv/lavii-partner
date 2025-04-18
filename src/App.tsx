@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import {
   Poppins_400Regular,
@@ -8,7 +9,6 @@ import {
   useFonts,
 } from "@expo-google-fonts/poppins";
 
-import { MainScreen2 } from "./screens/MainScreen";
 import RootNavigator from "./navigations/RootNavigator";
 
 export default function App() {
@@ -23,8 +23,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
+    <GestureHandlerRootView>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }

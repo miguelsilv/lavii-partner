@@ -5,8 +5,9 @@ import {
   secondaryColor,
 } from "@/styles/colors";
 import styled from "@/utils/styled";
+import { PropsWithChildren } from "react";
 
-import { Text, TextProps } from "react-native";
+import { Text, TextProps, TouchableOpacity } from "react-native";
 
 type FontWeight = 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
@@ -152,3 +153,14 @@ export const DisplayText = styled(HintText, {
   fontSize: 32,
   fontWeight: weightMap.bold,
 });
+
+export function LinkText({
+  children,
+  ...props
+}: PropsWithChildren<BaseTextProps & TextProps>) {
+  return (
+    <TouchableOpacity onPress={props.onPress}>
+      <RegularText.Medium {...(props as any)}>{children}</RegularText.Medium>
+    </TouchableOpacity>
+  );
+}
