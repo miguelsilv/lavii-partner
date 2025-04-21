@@ -46,7 +46,11 @@ export default function MainScreen() {
         </Section>
         <Section>
           <Gutter space={8}>
-            <Button outline title="Criar conta" onPress={() => {}} />
+            <Button
+              outline
+              title="Criar conta"
+              onPress={() => navigation.navigate("Register")}
+            />
             <Button
               title="Já tenho conta"
               onPress={() => navigation.navigate("Login")}
