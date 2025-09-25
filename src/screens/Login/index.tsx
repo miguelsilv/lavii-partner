@@ -1,13 +1,9 @@
 import Button from "@/components/Button";
 import {
   Align,
-  Center,
   Column,
-  Container,
   ContainerScrollable,
-  Expanded,
   Gutter,
-  Space,
 } from "@/components/core";
 import Image from "@/components/Image";
 import Input from "@/components/Input";
@@ -71,7 +67,7 @@ export default function LoginScreen() {
               Alert.prompt(
                 "Recuperação de senha",
                 "Informe seu email para recuperar a senha",
-                (text) => {}
+                (text) => { }
               );
             }}
             secureTextEntry={!showPassword}
@@ -85,7 +81,7 @@ export default function LoginScreen() {
           />
         </Gutter>
 
-        <Button title="Acessar" onPress={() => {}} />
+        <Button title="Acessar" onPress={() => { }} />
       </Column>
     </ContainerScrollable>
   );
