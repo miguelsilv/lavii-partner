@@ -1,28 +1,27 @@
-import { alternativeColor, neutralColor } from "@lavii/ds";
-import { scaleSize } from "@lavii/ds";
+import { neutralColor, scaleSize } from "@lavii/ds";
 import { styled } from "@lavii/ds";
-import { View, ScrollView, ViewProps, ScrollViewProps } from "react-native";
+import { View } from "react-native";
 
-const spacingSize = 24;
-const headingTextSize = 24;
+export const ContentTimeSlot = styled(View, {
+  height: scaleSize(48),
+  width: scaleSize(74),
+  alignItems: "center",
+  justifyContent: "center",
+  borderRadius: 8,
+});
 
-interface TabsViewProps {
-  topSafeArea: number;
-}
-
-export const TabsView = styled<TabsViewProps, ViewProps>(View, (props) => ({
-  height: scaleSize(38),
-  position: "absolute",
-  top: scaleSize(props.topSafeArea + headingTextSize + spacingSize),
-  left: 0,
-  right: 0,
-  backgroundColor: alternativeColor,
-  zIndex: 1
-}));
+export const ContentDateSelected = styled(View, {
+  height: 104,
+  width: 100,
+  borderRadius: 8,
+  marginHorizontal: 5,
+  alignItems: "center",
+  justifyContent: "center",
+});
 
 export const Divider = styled(View, {
   width: "100%",
   backgroundColor: neutralColor,
   height: 1,
-  marginLeft: scaleSize(spacingSize),
+  marginLeft: scaleSize(24),
 });
