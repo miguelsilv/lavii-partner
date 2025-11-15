@@ -27,11 +27,15 @@ import {
   SmallCaptionText,
   Space,
   Card,
-  CaptionText
+  CaptionText,
+  Gutter,
+  ScheduleCard,
 } from "@lavii/ds";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import { scheduleCardStatusProps } from "@/constants/order.consts";
+import { RootNavigationParamList } from "@/navigations/types";
+import { OrderStatus } from "@/types/order";
 
 
 interface OrderRequests {
@@ -103,7 +107,7 @@ export function HomeHeader({ name }: { name: string }) {
 
   return (
     <Row mainAlign="space-between" crossAlign="center">
-      <SubtitleText.Bold color={mutedAccentColor}>Olá, {name}</SubtitleText.Bold>
+      <SubtitleText.Bold color={mutedAccentColor}>Olá, {name} </SubtitleText.Bold>
       <Switch label={enabled ? "Online" : "Offline"} enabled={enabled} onToggle={handleToggle} />
     </Row>
 
@@ -202,7 +206,31 @@ export function OrderRequestItem({ request }: { request: OrderRequests }) {
   )
 }
 
+export function OrderRequestList() {
+  return (
+    <Gutter space={scaleSize(16)}>
+      <TitleText color={primaryColor}>Solicitações</TitleText>
+
+      <FlatListWithoutMargins
+        data={orderRequests}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }: { item: OrderRequests }) => <OrderRequestItem request={item} />}
+        ItemSeparatorComponent={() => <Space size={scaleSize(16)} />}
+      />
+    </Gutter>
+  )
+}
+
 export function HomeContent({ loading }: { loading: boolean }) {
+  const navigation = useNavigation<NativeStackNavigationProp<RootNavigationParamList>>();
+
+  const handleSeeAll = () => {
+    navigation.navigate("Tabs", {
+      screen: "Activities",
+    });
+  }
+
   if (loading) return (
     <Center>
       <ActivityIndicator size="large" color={primaryColor} />
@@ -214,18 +242,39 @@ export function HomeContent({ loading }: { loading: boolean }) {
   )
 
   return (
-    <View>
-      <Space size={scaleSize(16)} />
-      <TitleText color={primaryColor}>Solicitações</TitleText>
-      <Space size={scaleSize(16)} />
-
-      <FlatListWithoutMargins
-        data={orderRequests}
-        horizontal
-        renderItem={({ item }: { item: OrderRequests }) => <OrderRequestItem request={item} />}
-        ItemSeparatorComponent={() => <Space size={scaleSize(16)} />}
-      />
-    </View>
+    <Gutter space={scaleSize(36)}>
+      <OrderRequestList />
+      <Gutter space={scaleSize(16)}>
+        <Row crossAlign="center" mainAlign="space-between">
+          <TitleText color={primaryColor}>Proximos trabalhos</TitleText>
+          <TouchableOpacity onPress={handleSeeAll}>
+            <Row crossAlign="center">
+              <RegularText.Medium color={mutedColor}>
+                Ver todos
+              </RegularText.Medium>
+              <MaterialIcons name="chevron-right" size={24} color={mutedColor} />
+            </Row>
+          </TouchableOpacity>
+        </Row>
+        <ScheduleCard
+          time="10:00"
+          serviceName="Limpeza completa"
+          address="Av Siclano Figueredo, 634"
+          status={OrderStatus.STARTED}
+          alternativeAction={{
+            icon: <MaterialIcons name="settings" size={24} color="white" />,
+            onPress: () => { },
+          }}
+          price={100}
+          categoryIcon="motorcycle"
+          type="IN_PERSON"
+          personName="Pedro"
+          onCancel={() => { }}
+          onNext={() => { }}
+          configs={scheduleCardStatusProps}
+        />
+      </Gutter>
+    </Gutter>
   )
 }
 
@@ -236,7 +285,6 @@ export default function HomeScreen() {
     <Container backgroundColor={alternativeColor} withVerticalPadding edges={{ top: "maximum", bottom: "maximum" }}>
       <HomeHeader name={data?.partner?.name || ""} />
       <HomeContent loading={loading} />
-      <SubtitleText.Bold color={mutedAccentColor}>Teste</SubtitleText.Bold>
     </Container>
   );
 }

@@ -5,7 +5,10 @@ import {
 import { RouteProp } from "@react-navigation/native";
 
 export type RootNavigationParamList = {
-  Tabs: undefined;
+  Tabs:  {
+    screen: "Home" | "Activities" | "Notifications" | "Settings";
+  };
+  Activities: undefined;
   ProofOfPayment: {
     orderId: string;
   };

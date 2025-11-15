@@ -105,7 +105,7 @@ export default function TabsNavigator() {
         }}
       />
       <Tab.Screen
-        name="activity"
+        name="Activities"
         component={ActivitiesScreen}
         options={{
           title: "Atividade",
@@ -119,7 +119,7 @@ export default function TabsNavigator() {
         }}
       />
       <Tab.Screen
-        name="alert"
+        name="Notifications"
         component={NotificationsTab}
         options={{
           title: "Notificações",
@@ -137,7 +137,7 @@ export default function TabsNavigator() {
         }}
       />
       <Tab.Screen
-        name="settings"
+        name="Settings"
         component={SettingsScreen}
         options={{
           title: "Perfil",

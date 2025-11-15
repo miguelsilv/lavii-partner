@@ -7,7 +7,6 @@ export enum PaymentMethod {
 }
 
 export enum OrderStatus {
-  CREATED = "CREATED",
   PAID = "PAID",
   STARTED = "STARTED",
   DONE = "DONE",

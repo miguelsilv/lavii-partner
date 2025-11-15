@@ -1,4 +1,4 @@
-import { TabGroup, ScheduleCard } from "@lavii/ds";
+import { TabGroup, ScheduleCard, primaryLightColor, OrderStatus, secondaryLightColor, mutedColor, ScheduleCardStatusProps, ScheduleCardAction, mutedLightColor } from "@lavii/ds";
 import { Container, Space } from "@lavii/ds";
 import { TitleLargeText, SubtitleText, RegularText } from "@lavii/ds";
 import { alternativeColor, secondaryColor, primaryColor } from "@lavii/ds";
@@ -9,6 +9,11 @@ import { Row } from "@lavii/ds";
 import { Divider, TabsView } from "./style";
 import { SectionList, ActivityIndicator, View } from "react-native";
 import { useOrdersTabs, useOrdersPagination, useOrderNavigation, useOrderActions } from "./logics";
+import { scheduleCardStatusProps } from "@/constants/order.consts";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+
+
+
 
 export default function ActivitiesScreen() {
   const safeAreaInsets = useSafeAreaInsets();
@@ -91,13 +96,17 @@ export default function ActivitiesScreen() {
             serviceName={item.service.name}
             address={item.address.text}
             status={item.status}
+            alternativeAction={{
+              icon: <MaterialIcons name="location-on" size={24} color="white" />,
+              onPress: () => openNavigation(item.address),
+            }}
             price={item.price}
             categoryIcon={item.category.iconName}
             type={item.type}
-            partner={item.partner.name}
+            personName={item.partner.name}
             onCancel={() => handleCancelOrder(item.id)}
-            onRepeat={() => { console.log("repeat") }}
-            onPressIcon={() => openNavigation(item.address)}
+            onNext={() => { console.log("next") }}
+            configs={scheduleCardStatusProps}
           />
         )}
         ItemSeparatorComponent={() => <Space size={16} />}
