@@ -16,13 +16,14 @@ export default function DaysOfWeek({ days, selectedDay, onSelectDay, scrollRef }
   };
 
   return (
-    <View style={{ paddingVertical: scaleSize(10), marginRight: scaleSize(-24) }}>
+    <View style={{ paddingVertical: scaleSize(10), marginHorizontal: scaleSize(-24) }}>
       <FlatList
         ref={scrollRef}
         data={days}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={{ paddingHorizontal: scaleSize(24) }}
         renderItem={({ item }) => {
           const isSelected = isSameDay(selectedDay, item.date);
           const isDisabled = item.disabled;

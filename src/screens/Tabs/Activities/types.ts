@@ -1,4 +1,5 @@
-import React from "react";
+import React, { RefObject } from "react";
+import { FlatList } from "react-native";
 
 export interface DayItem {
   date: Date;
@@ -17,7 +18,7 @@ export interface DaysOfWeekProps {
   days: DayItem[];
   selectedDay: Date | null;
   onSelectDay: (date: Date) => void;
-  scrollRef?: React.RefObject<any>;
+  scrollRef?: RefObject<FlatList<DayItem> | null>;
 }
 
 export interface TimeSlotsProps {

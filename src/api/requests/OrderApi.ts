@@ -54,45 +54,6 @@ export interface IServiceResponse {
   name: string;
 }
 
-export interface ICategoryResponse {
-  id: string;
-  name: string;
-  iconName: string;
-}
-
-export interface IPartnerResponse {
-  name: string;
-}
-
-export interface IOrderResponse {
-  id: string;
-  time: string;
-  service: IServiceResponse;
-  address: IOrderAddressResponse;
-  status: OrderStatus;
-  price: number;
-  category: ICategoryResponse;
-  type: OrderType;
-  partner: IPartnerResponse;
-}
-
-export interface IOrdersByDateResponse {
-  date: string;
-  orders: IOrderResponse[];
-}
-
-export interface IMyOrdersResponse {
-  currentPage: number;
-  totalPages: number;
-  hasMore: boolean;
-  data: IOrdersByDateResponse[];
-}
-
-export interface IMyOrdersParams {
-  status?: string;
-  page?: number;
-  daysPerPage?: number;
-}
 
 export class OrderApi {
   constructor(private http: IHttpClient) { }
@@ -103,25 +64,6 @@ export class OrderApi {
 
   summary(orderId: string) {
     return this.http.get<IOrderSummaryResponse>(`/v1/order/${orderId}/summary`);
-  }
-
-  getMyOrders(params?: IMyOrdersParams) {
-    const queryParams = new URLSearchParams();
-    
-    if (params?.status) {
-      queryParams.append("status", params.status);
-    }
-    if (params?.page) {
-      queryParams.append("page", params.page.toString());
-    }
-    if (params?.daysPerPage) {
-      queryParams.append("daysPerPage", params.daysPerPage.toString());
-    }
-
-    const query = queryParams.toString();
-    const endpoint = `/v1/order/partner/me${query ? `?${query}` : ""}`;
-    
-    return this.http.get<IMyOrdersResponse>(endpoint);
   }
 
   reject(orderId: string) {

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DayItem } from "./types";
+import { FlatList } from "react-native";
+import { scaleSize } from "@lavii/ds";
 
 export function useDateNavigation() {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
@@ -33,8 +35,12 @@ export function useDateNavigation() {
   const handlePreviousMonth = useCallback(() => {
     if (canGoPrevious) {
       setCurrentMonth((prev) => {
-        const newDate = new Date(prev);
-        newDate.setMonth(newDate.getMonth() - 1);
+        const newDate = new Date(prev.getFullYear(), prev.getMonth() - 1, 1);
+
+        if (newDate.getMonth() === today.getMonth()) {
+          return today;
+        }
+
         return newDate;
       });
     }
@@ -43,8 +49,12 @@ export function useDateNavigation() {
   const handleNextMonth = useCallback(() => {
     if (canGoNext) {
       setCurrentMonth((prev) => {
-        const newDate = new Date(prev);
-        newDate.setMonth(newDate.getMonth() + 1);
+        const newDate = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
+
+        if (newDate.getMonth() === today.getMonth()) {
+          return today;
+        }
+
         return newDate;
       });
     }
@@ -60,7 +70,7 @@ export function useDateNavigation() {
 }
 
 export function useDaysOfWeek(currentMonth: Date) {
-  const scrollRef = useRef<any>(null);
+  const scrollRef = useRef<FlatList<DayItem>>(null);
 
   const today = useMemo(() => {
     const date = new Date();
@@ -69,6 +79,16 @@ export function useDaysOfWeek(currentMonth: Date) {
   }, []);
 
   const [selectedDate, setSelectedDate] = useState<Date>(today);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollToOffset({
+        offset: 0,
+        animated: true,
+      });
+      setSelectedDate(currentMonth);
+    }
+  }, [currentMonth]);
 
   const days: DayItem[] = useMemo(() => {
     const year = currentMonth.getFullYear();
@@ -105,10 +125,10 @@ export function useDaysOfWeek(currentMonth: Date) {
       const selectedIndex = days.findIndex(
         (d) => d.date.getTime() === selectedDate.getTime()
       );
-      if (selectedIndex >= 0) {
+      if (selectedIndex >= 1) {
         setTimeout(() => {
-          scrollRef.current?.scrollToIndex({
-            index: selectedIndex,
+          scrollRef.current?.scrollToOffset({
+            offset: (selectedIndex - 1) * scaleSize(106),
             animated: true,
           });
         }, 100);
@@ -130,4 +150,3 @@ export function useDaysOfWeek(currentMonth: Date) {
 
   return { days, selectedDate, handleSelectDay, scrollRef };
 }
-
